@@ -17,26 +17,29 @@ Route::get('/', function () {
 
 Route::get('registerUser',function(){
 	return view('auth.register');
-});
+})->middleware('auth');
 Route::get('registerCompetition',function(){
 	return view('competition');
-});
+})->middleware('auth');
 Route::get('plate',function(){
 	return view('plate');
-});
+})->middleware('auth');
 Route::get('vote',function(){
 	return view('vote');
 })->middleware('auth');
 Route::get('results',function(){
 	return view('results');
 });
-Route::get('evaluate/{id?}','VoteController@show');
-Route::post('evaluate/{id?}','VoteController@store');
-Route::post('plate','PlateController@store');
-Route::post('registerUser','UserController@store');
-Route::post('registerCompetition','PeriodController@store');
-Route::get('updateCompetition/{id?}', 'PeriodController@show');
-Route::post('updateCompetition/{id?}','PeriodController@store');
+Route::get('evaluate/{id?}','VoteController@show')->middleware('auth');
+Route::post('evaluate/{id?}','VoteController@store')->middleware('auth');
+Route::post('plate','PlateController@store')->middleware('auth');
+Route::post('registerUser','UserController@store')->middleware('auth');
+
+Route::post('registerUserAjax','UserController@storeAjax')->middleware('auth');
+
+Route::post('registerCompetition','PeriodController@store')->middleware('auth');
+Route::get('updateCompetition/{id?}', 'PeriodController@show')->middleware('auth');
+Route::post('updateCompetition/{id?}','PeriodController@store')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

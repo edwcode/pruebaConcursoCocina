@@ -94,6 +94,35 @@
                         </div>
                     </form>
                 </div>
+                <table class="table text-center">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                    <header>
+                        <tr>
+                            <td>Nombre de usuario</td>
+                            <td>E-Mail</td>
+                            <td>Rol</td>
+                            <td>Concurso</td>
+                            <td>Password</td>
+                            <td>Modificar</td>
+                        </tr>
+                    </header>
+                    <tbody>
+                        @foreach (App\User::all() as $user)
+                        <tr>
+                            <td><input type="text" name="nameNew" id="nameNew{{ $user->id }}" value="{{ $user->name }}" class="form-control"></td>
+                            <td><input id="emailNew{{ $user->id }}" type="emailNew" class="form-control" name="emailNew" value="{{ $user->email }}" disabled="true"></td>
+                            <td>{{ Form::select('rolNew', App\rol::getComboRols(), $user->rols_id,['class' => 'form-control', 'required'=>true,'id'=>'rolNew'.$user->id]) }}</td>
+                            <td>{{ Form::select('period_idNew', App\Period::getComboPeriod(),$user->period_id ,['class' => 'form-control', 'required'=>true,'id'=>'period_id'.$user->id]) }}</td>
+                            <td>
+                                <input id="passwordNew{{ $user->id }}" type="password" class="form-control" name="passwordNew" placeholder="password">
+                                <input id="password-confirmNew{{ $user->id }}" type="password" class="form-control" name="password-confirmNew" placeholder="Confirmar Password">
+                                <input type="hidden" name="id{{ $user->id }}" value="{{ $user->id }}">
+                            </td>
+                            <td><button  class="btn btn-default updateUser" value="{{ $user->id }}">Modificar</button></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

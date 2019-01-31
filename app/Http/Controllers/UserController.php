@@ -70,9 +70,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function storeAjax(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            //'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'rol'=>'required',
+            'period_id' => 'required',
+        ],[
+            'required' => ':attribute es requerido.',
+            'numeric' => ':attribute debe ser numerico.',
+         ]);
+
+        $userUpdtae = User::find($request['id']);
+        $userUpdtae->name = $request['name'];
+        $userUpdtae->password = bcrypt($request['password']);
+        $userUpdtae->rols_id = $request['rol'];
+        $userUpdtae->period_id = $request['period_id'];
+        $userUpdtae->save();
+        return response()->Json('Usuario actualizado !!');
     }
 
     /**

@@ -15,11 +15,11 @@
                         @if ($element->PeriodUser != '[]')
                             @foreach ($element->PeriodUser as $user)
                             @if ($user->rols_id == 2)
-                                    <tr>
+                                    <tr class="success">
                                         <td colspan="5"><strong>Concursante:</strong> {{ $user->name }}</td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="8">Valoracion:</td>
+                                        <td colspan="5">Valoracion:</td>
                                     </tr>
 
                                     @foreach ($user->UserPlate as $plate)
